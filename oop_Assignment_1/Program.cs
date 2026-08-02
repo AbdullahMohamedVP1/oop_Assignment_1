@@ -9,6 +9,8 @@
     {
         public string Name;
     }
+
+
     internal class Program
     {
         static void Main(string[] args)
@@ -40,6 +42,20 @@
             // Answer: both variables reference the same object
             // modifying variable affects the other
             #endregion
-        }
+
+            #region Question2
+            //a) Identify at least three problems with this design from an encapsulation perspective
+
+            //solution:fields are public so they can be modified directly
+            // there isn't validation for the fields
+            //Invalid data can be assigned such as negative values
+
+            //b) How can private fields and public properties improve this design?
+
+            //sol: private fields protect data from direct access
+            // public properties allow validation
+            // make properties to keep objects in valid state
+            #endregion
+    }
     }
 }
