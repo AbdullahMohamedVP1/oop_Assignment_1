@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
 using System.Threading.Channels;
 
 namespace oop_Assignment_1
@@ -25,6 +27,55 @@ namespace oop_Assignment_1
         public string Name;
     }
 
+    struct Shipment
+    {
+        private string trackingCode;
+        private string description;
+        private double weight;
+        private decimal deliveryFee;
+
+        public DeliveryAddress Destination { get; set; }
+
+        public string TrackingCode
+        {
+            get { return trackingCode; }
+            set
+            {
+                if(!string.IsNullOrWhiteSpace(value))
+                {
+                    trackingCode = value;
+                }
+            }
+        }
+        public string Description
+        {
+            get { return description; }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                    description = value;
+            }
+        }
+
+        public double Weight
+        {
+            get { return weight; }
+            set
+            {
+                if (value > 0)
+                    weight = value;
+            }
+        }
+
+        public decimal DeliveryFee
+        {
+            get { return deliveryFee; }
+            set
+            {
+                if (value > 0) { deliveryFee = value; }
+            }
+        }
+    }
 
 
     internal class Program
@@ -86,6 +137,15 @@ namespace oop_Assignment_1
             Console.WriteLine(Dv1.GetFullAddress());
             Console.WriteLine("Address 2:");
             Console.WriteLine(Dv2.GetFullAddress());
+            #endregion
+
+            #region Question4
+            //Apply proper encapsulation using public properties with the following validation rules:
+            //TrackingCode cannot be null, empty, or whitespace.
+            //Description cannot be null, empty, or whitespace.
+            //Weight must be greater than 0.
+            //DeliveryFee must be greater than 0.
+            //If an invalid value is assigned, keep the previous valid value.
             #endregion
         }
     }
