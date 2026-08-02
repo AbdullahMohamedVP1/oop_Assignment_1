@@ -86,6 +86,48 @@ namespace oop_Assignment_1
         {
             get { return DeliveryFee + ((decimal)Weight * 5); }    // هعمل كاستنج هحول من دبل الي ديسيمل
         }
+
+        //اول كونستراكتور يستقبل trackingcode فقط
+        public Shipment(string trackingCode)
+        {
+            this.trackingCode = trackingCode;
+            description = "Unknown";
+            weight = 1;
+            deliveryFee = 50;
+
+            Destination = new DeliveryAddress("Cairo", "Unknown", 0);
+        }
+
+        //Constructor ثاني يستقبل كل القيم
+        public Shipment(string trackingCode, string description, double weight, decimal deliveryFee, DeliveryAddress destination)
+        {
+            this.trackingCode = trackingCode;
+            this.description = description;
+            this.weight = weight;
+            this.deliveryFee = deliveryFee;
+            Destination = destination;
+        }
+
+        // ميثود مطلوبه فالسؤال السادس
+        //updates the fee only when newFee is greater than 0
+        public void UpdateDeliveryFee(decimal newFee)
+        {
+            if (newFee > 0)
+            {
+                DeliveryFee = newFee;
+            }
+        }
+
+        // ثاني ميثود مطلوبه تطبع كل البيانات 
+        public void PrintShipment()
+        {
+            Console.WriteLine($"Tracking Code: {TrackingCode}");
+            Console.WriteLine($"Description: {Description}");
+            Console.WriteLine($"Weight: {Weight}");
+            Console.WriteLine($"Delivery Fee: {DeliveryFee}");
+            Console.WriteLine($"Destination: {Destination.GetFullAddress()}");
+            Console.WriteLine($"Estimated Cost: {EstimatedCost}");
+        }
     }
 
 
@@ -170,6 +212,13 @@ namespace oop_Assignment_1
             //The EstimatedCost value must be calculated when requested and must not be stored in a separate field
             //طبعا الحل فوق في الاستركت زي السؤال اللي فات
             #endregion
-    }
+
+            #region Question6
+            //2. Add constructor overloading to Shipment
+            //3. Add the following methods to Shipment:
+            // UpdateDeliveryFee(decimal newFee): updates the fee only when newFee is greater than 0.
+            // PrintShipment(): prints all shipment information, including the estimated cost.
+            #endregion
+        }
     }
 }
