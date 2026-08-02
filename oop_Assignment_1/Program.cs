@@ -303,6 +303,122 @@ namespace oop_Assignment_1
             //Returns true if the shipment was added successfully.
             //Returns false if the delivery center is full
             #endregion
+
+            #region Final_Main
+
+            DeliveryCenter center = new DeliveryCenter();
+
+            for (int i = 0; i < 3; i++) // طالب 3 shipments
+            {
+                // اللي اليوزر هيدخله
+                Console.WriteLine($"Enter Shipment {i + 1} Data");
+
+                Console.Write("Tracking Code: ");
+                string code = Console.ReadLine();
+
+                Console.Write("Description: ");
+                string desc = Console.ReadLine();
+
+                Console.Write("Weight: ");
+                double weight = double.Parse(Console.ReadLine());
+
+                Console.Write("Delivery Fee: ");
+                decimal fee = decimal.Parse(Console.ReadLine());
+
+                Console.Write("City: ");
+                string city = Console.ReadLine();
+
+                Console.Write("Street: ");
+                string street = Console.ReadLine();
+
+                Console.Write("Building Number: ");
+                int building = int.Parse(Console.ReadLine());
+
+                DeliveryAddress address = new DeliveryAddress(
+                    city,
+                    street,
+                    building
+                );
+
+
+                Shipment shipment = new Shipment(
+                    code,
+                    desc,
+                    weight,
+                    fee,
+                    address
+                );
+
+
+                if (center.AddShipment(shipment))
+                {
+                    Console.WriteLine("\nShipment added successfully.\n");
+                }
+            }
+
+
+
+            //shipments
+            Console.WriteLine("--- All Shipments ---");
+
+            for (int i = 0; i < 3; i++)
+            {
+                center[i].PrintShipment();
+                Console.WriteLine();
+            }
+
+
+
+            // Search
+            Console.Write("Enter a tracking code to search: ");
+            string searchCode = Console.ReadLine();
+
+
+            Shipment result = center[searchCode];
+
+
+            if (result.TrackingCode != null)
+            {
+                Console.WriteLine(
+                    $"Shipment found: {result.TrackingCode} - {result.Description}"
+                );
+            }
+            else
+            {
+                Console.WriteLine("Shipment not found.");
+            }
+
+
+
+            // Struct Test
+            Console.WriteLine("\n--- Struct Copy Test ---");
+
+
+            DeliveryAddress address1 = new DeliveryAddress(
+                "Cairo",
+                "Tahrir Street",
+                15
+            );
+
+
+            DeliveryAddress address2 = address1;
+
+
+            address2.BuildingNumber = 20;
+            address2.Street = "Makram Ebeid Street";
+
+
+            Console.WriteLine(
+                $"Original Address: {address1.BuildingNumber} {address1.Street}, {address1.City}"
+            );
+
+
+            Console.WriteLine(
+                $"Copied Address: {address2.BuildingNumber} {address2.Street}, {address2.City}"
+            );
+
+
+            #endregion
         }
     }
 }
