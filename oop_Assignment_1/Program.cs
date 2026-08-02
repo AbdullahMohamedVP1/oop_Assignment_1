@@ -1,14 +1,30 @@
-﻿namespace oop_Assignment_1
+﻿using System.Security.Cryptography;
+using System.Threading.Channels;
+
+namespace oop_Assignment_1
 {
     struct DeliveryAddress
     {
         public string City;
         public string Street;
+        public int BuildingNumber;
+
+        public DeliveryAddress(string city, string street, int buldingNumber)
+        {
+            City = city;
+            Street = street;
+            BuildingNumber = buldingNumber;
+        }
+        public string GetFullAddress()
+        {
+            return $"city: {City}, street: {Street}, building: {BuildingNumber}";
+        }
     }
     public class Customer
     {
         public string Name;
     }
+
 
 
     internal class Program
@@ -56,6 +72,21 @@
             // public properties allow validation
             // make properties to keep objects in valid state
             #endregion
-    }
+
+            #region DeliveryAddress struct
+            //Create one DeliveryAddress value, copy it into a second variable, modify the copy, and print both values to prove that the original did not change
+
+            DeliveryAddress Dv1 = new DeliveryAddress("cairo" , "tahrir", 1);
+            DeliveryAddress Dv2 = Dv1;
+            Dv2.City = "Alex";
+            Dv2.Street = "Sea Road";
+            Dv2.BuildingNumber = 20;
+
+            Console.WriteLine("Address 1:");
+            Console.WriteLine(Dv1.GetFullAddress());
+            Console.WriteLine("Address 2:");
+            Console.WriteLine(Dv2.GetFullAddress());
+            #endregion
+        }
     }
 }
