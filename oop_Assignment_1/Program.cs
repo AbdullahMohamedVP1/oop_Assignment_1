@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Metrics;
 using System.Security.Cryptography;
 using System.Threading.Channels;
 
@@ -36,10 +37,11 @@ namespace oop_Assignment_1
 
         public DeliveryAddress Destination { get; set; }
 
+        //readonly from outside struct
         public string TrackingCode
         {
             get { return trackingCode; }
-            set
+            private set
             {
                 if(!string.IsNullOrWhiteSpace(value))
                 {
@@ -47,6 +49,8 @@ namespace oop_Assignment_1
                 }
             }
         }
+
+        //read and write with validation  زي ما هو
         public string Description
         {
             get { return description; }
@@ -57,6 +61,7 @@ namespace oop_Assignment_1
             }
         }
 
+        //نفس الكلام زي ما هو
         public double Weight
         {
             get { return weight; }
@@ -67,13 +72,19 @@ namespace oop_Assignment_1
             }
         }
 
+        //public get and private set
         public decimal DeliveryFee
         {
             get { return deliveryFee; }
-            set
+            private set
             {
                 if (value > 0) { deliveryFee = value; }
             }
+        }
+
+        public decimal EstimatedCost
+        {
+            get { return DeliveryFee + ((decimal)Weight * 5); }    // هعمل كاستنج هحول من دبل الي ديسيمل
         }
     }
 
@@ -147,6 +158,18 @@ namespace oop_Assignment_1
             //DeliveryFee must be greater than 0.
             //If an invalid value is assigned, keep the previous valid value.
             #endregion
-        }
+
+            #region Question5
+            //Add the following properties:
+            //TrackingCode: read - only from outside the struct.
+            //Description: read/write property with validation.
+            //Weight: read/write property with validation.
+            //DeliveryFee: public getter and private setter.
+            //Destination: public read/write property.
+            //EstimatedCost: a calculated property that returns: DeliveryFee + (Weight × 5)
+            //The EstimatedCost value must be calculated when requested and must not be stored in a separate field
+            //طبعا الحل فوق في الاستركت زي السؤال اللي فات
+            #endregion
+    }
     }
 }
