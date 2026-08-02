@@ -1,8 +1,11 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Metrics;
+using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
 using System.Threading.Channels;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace oop_Assignment_1
 {
@@ -130,6 +133,67 @@ namespace oop_Assignment_1
         }
     }
 
+    struct DeliveryCenter
+    {
+        private Shipment[] shipments;
+
+        public DeliveryCenter()
+        {
+            shipments = new Shipment[10];
+        }
+
+
+        // اندكسر نوعوا int
+        public Shipment this[int index]
+        {
+            get
+            {
+                if (index >= 0 && index < shipments.Length) // لو رقم المستخدم صحيح وداخل جدود الاراي
+                    return shipments[index];
+
+                return default;
+            }
+
+            set
+            {
+                if (index >= 0 && index < shipments.Length)
+                    shipments[index] = value;
+            }
+        }
+
+
+        // String
+        public Shipment this[string trackingCode]
+        {
+            get
+            {
+                for (int i = 0; i < shipments.Length; i++)
+                {
+                    if (shipments[i].TrackingCode == trackingCode)
+                    {
+                        return shipments[i];
+                    }
+                }
+
+                return default;
+            }
+        }
+
+
+        public bool AddShipment(Shipment shipment)
+        {
+            for (int i = 0; i < shipments.Length; i++)
+            {
+                if (shipments[i].TrackingCode == null)
+                {
+                    shipments[i] = shipment;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
 
     internal class Program
     {
@@ -180,16 +244,16 @@ namespace oop_Assignment_1
             #region DeliveryAddress struct
             //Create one DeliveryAddress value, copy it into a second variable, modify the copy, and print both values to prove that the original did not change
 
-            DeliveryAddress Dv1 = new DeliveryAddress("cairo" , "tahrir", 1);
-            DeliveryAddress Dv2 = Dv1;
-            Dv2.City = "Alex";
-            Dv2.Street = "Sea Road";
-            Dv2.BuildingNumber = 20;
+            //DeliveryAddress Dv1 = new DeliveryAddress("cairo" , "tahrir", 1);
+            //DeliveryAddress Dv2 = Dv1;
+            //Dv2.City = "Alex";
+            //Dv2.Street = "Sea Road";
+            //Dv2.BuildingNumber = 20;
 
-            Console.WriteLine("Address 1:");
-            Console.WriteLine(Dv1.GetFullAddress());
-            Console.WriteLine("Address 2:");
-            Console.WriteLine(Dv2.GetFullAddress());
+            //Console.WriteLine("Address 1:");
+            //Console.WriteLine(Dv1.GetFullAddress());
+            //Console.WriteLine("Address 2:");
+            //Console.WriteLine(Dv2.GetFullAddress());
             #endregion
 
             #region Question4
@@ -218,6 +282,26 @@ namespace oop_Assignment_1
             //3. Add the following methods to Shipment:
             // UpdateDeliveryFee(decimal newFee): updates the fee only when newFee is greater than 0.
             // PrintShipment(): prints all shipment information, including the estimated cost.
+            #endregion
+
+            #region Question 7 : DeliveryCenter struct
+            //السؤال 
+            //5.Create a DeliveryCenter struct
+            //Note : For this assignment, implement DeliveryCenter as a struct. In the next assignment, after
+            //learning Classes and Inheritance, you will refactor it into a class.
+            //The DeliveryCenter struct should store up to 10 shipments using a private Shipment[] array.
+            //Add an integer indexer:
+            //Returns the shipment at the given position.
+            //Allows replacing a shipment.
+            //If the index is invalid, the getter returns default.
+            //If the index is invalid while setting, do nothing.
+            //Add a string indexer:
+            //Returns the first shipment with the matching tracking code.
+            //Returns default if no matching shipment is found.
+            //Add Method named AddShipment:
+            //Adds the shipment to the first available position.
+            //Returns true if the shipment was added successfully.
+            //Returns false if the delivery center is full
             #endregion
         }
     }
